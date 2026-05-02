@@ -1,55 +1,41 @@
 package com.narxoz.rpg.artifact;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-/**
- * Container for a hero's or vault's artifact collection.
- */
 public class Inventory {
-
-    private final List<Artifact> artifacts;
-
-    public Inventory() {
-        this.artifacts = new ArrayList<>();
-    }
-
-    public Inventory(List<Artifact> artifacts) {
-        this.artifacts = artifacts == null ? new ArrayList<>() : new ArrayList<>(artifacts);
-    }
+    private final List<Artifact> artifacts = new ArrayList<>();
 
     public void addArtifact(Artifact artifact) {
-        if (artifact != null) {
-            artifacts.add(artifact);
-        }
+        artifacts.add(artifact);
     }
-
     public List<Artifact> getArtifacts() {
-        return Collections.unmodifiableList(artifacts);
-    }
+    return new ArrayList<>(artifacts);
+}
 
-    public int size() {
-        return artifacts.size();
-    }
-
-    /**
-     * Visits each artifact in order.
-     *
-     * @param visitor the visitor to apply to each artifact
-     */
     public void accept(ArtifactVisitor visitor) {
         for (Artifact artifact : artifacts) {
             artifact.accept(visitor);
         }
     }
 
-    /**
-     * Creates a shallow copy of this inventory.
-     *
-     * @return a new inventory containing the same artifact references
-     */
+    public List<String> getArtifactNames() {
+        List<String> names = new ArrayList<>();
+        for (Artifact artifact : artifacts) {
+            names.add(artifact.getName());
+        }
+        return names;
+    }
+
+    public int size() {
+        return artifacts.size();
+    }
+
     public Inventory copy() {
-        return new Inventory(artifacts);
+        Inventory copy = new Inventory();
+        for (Artifact artifact : artifacts) {
+            copy.addArtifact(artifact);
+        }
+        return copy;
     }
 }
