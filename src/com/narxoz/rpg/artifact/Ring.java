@@ -1,23 +1,19 @@
 package com.narxoz.rpg.artifact;
 
-/**
- * A ring with a small enchantment or mystical bonus.
- */
 public class Ring extends Artifact {
+    private final String effect;
 
-    private final int magicBonus;
-
-    public Ring(String name, int value, int weight, int magicBonus) {
+    public Ring(String name, int value, int weight, String effect) {
         super(name, value, weight);
-        this.magicBonus = magicBonus;
+        this.effect = effect;
     }
 
-    public int getMagicBonus() {
-        return magicBonus;
+    public String getEffect() {
+        return effect;
     }
 
     @Override
     public void accept(ArtifactVisitor visitor) {
-        // TODO: call visitor.visit(this) for double dispatch.
+        visitor.visit(this);
     }
 }
